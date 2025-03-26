@@ -1,71 +1,96 @@
 #root {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
 }
 
 .title {
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-self: center;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-self: center;
 }
 
 .list {
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 !important;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 !important;
 }
 
 .li-list {
-  color: black;
-  margin: 20px;
-  background-color: white;
-  border-radius: 4px;
-  list-style-type: none;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 20px;
-  width: 20%;
+    color: black;
+    margin: 20px;
+    background-color: white;
+    border-radius: 4px;
+    list-style-type: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 20px;
+    width: 20%;
 }
 
 /* Modal */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 80%;
-  text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px !important;
+    max-width: 80%;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content button {
-  margin-top: 15px;
-  padding: 10px 15px;
-  background-color: rgb(116, 235, 229);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.modal-content button:hover {
-  background-color: rgb(46, 94, 91);
+.container-dados-usuario-superior {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.idade {
+    margin-right: 235px;
+}
+
+.container-dados-usuario-inferior {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.botaoEditarUsuario {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container-botoes {
+    display: flex !important;
+    align-items: end;
+    float: right;
+    gap: 20px;
 }

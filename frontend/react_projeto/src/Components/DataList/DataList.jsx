@@ -4,7 +4,7 @@ const DataList = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("http://localhost:8800/")
       .then((response) => response.json())
       .then((data) => {
         setData(data);
@@ -16,11 +16,14 @@ const DataList = (props) => {
       <h1 className="title">Listando Usuários</h1>
       <ul className="list">
         {data.map((item) => (
-          <li key={item.id} className="li-list">
-            {item.name}<br />
-            {item.phone}<br />
-            {item.email}<br />
-            <button className="btn btn-primary" onClick={() => props.clicked(item)}>
+          <li key={item.idUsuarios} className="li-list">
+            <p id="nome">Nome: {item.nome}</p>
+            <p id="idade">Idade: {item.idade}</p>
+            <p id="cpf">CPF: {item.cpf}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => props.clicked(item)}
+            >
               Mais detalhes
             </button>
           </li>

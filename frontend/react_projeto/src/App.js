@@ -1,9 +1,9 @@
-import './App.css';
-import DataList from './Components/DataList/DataList';
+import "./App.css";
+import ModalUser from "./Components/ModalUser/ModalUser";
 function App() {
   return (
     <div className="App">
-      <DataList/>
+      <ModalUser />
     </div>
   );
 }
