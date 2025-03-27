@@ -13,7 +13,6 @@ export const getUsers = (_, res) => {
 }
 
 export const editUser = (req, res) => {
-    console.log("req.body:", req.body);
     const { idUsuarios, nome, idade, cpf } = req.body;
     const sql = "UPDATE usuarios SET nome = ?, idade = ?, cpf = ? WHERE idUsuarios = ?";
   
@@ -25,5 +24,18 @@ export const editUser = (req, res) => {
       return res.json({ message: results});
     });
   };
+
+export const adicionarUser = (req, res) => {
+    const {nome, idade, cpf } = req.body;
+    const sql = "INSERT INTO usuarios (nome, idade, cpf) VALUES (?, ?, ?)";
+
+    db.query(sql, [nome, idade, cpf], (err, results) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        return res.json({ message: "Usuário adicionado com sucesso!"});
+      });
+  
+}
   
 

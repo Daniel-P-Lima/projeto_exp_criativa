@@ -2,41 +2,52 @@ import React from "react";
 
 export default function ModalEditarUser({ user, onClose, onSave }) {
   const [formData, setFormData] = React.useState({ ...user });
+  const [showConfirm, setShowConfirm] = React.useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e) {
-    const querSalvar = window.confirm("Tem certeza que deseja salvar as alterações?");
-    if (!querSalvar) { return }
+  function handleOpenConfirm(e) {
     e.preventDefault();
+    setShowConfirm(true);
+  }
 
-  // Aqui é onde você manda a requisição para o seu backend:
-  fetch("http://localhost:8800/editarUsuario", {
-    method: "PUT", // Se for realmente inserir ou editar
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData), // formData vem do seu state
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Resposta do servidor:", data);
-      // Se quiser fechar o modal ou exibir uma mensagem de sucesso, etc:
-      onClose();
+  function handleConfirmYes() {
+    onSave(formData);
+    handleSubmit();
+    setShowConfirm(false);
+    onClose();
+  }
+
+  function handleConfirmNo() {
+    setShowConfirm(false);
+  }
+
+  function handleSubmit(e) {
+    fetch("http://localhost:8800/editarUsuario", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     })
-    .catch((error) => {
-      console.error("Erro ao enviar dados:", error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Resposta do servidor:", data);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar dados:", error);
+      });
   }
 
   return (
     <div className="modal">
       <div className="modal-content">
         <h1>Editar Usuário</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleOpenConfirm}>
           <div className="form-group">
             <label>Nome:</label>
             <input
@@ -79,6 +90,21 @@ export default function ModalEditarUser({ user, onClose, onSave }) {
             </button>
           </div>
         </form>
+        {showConfirm && (
+          <div className="confirm-modal">
+            <div className="confirm-modal-content">
+              <h2>Confirma a Edição?</h2>
+              <div className="container-botoes">
+                <button className="btn btn-success" onClick={handleConfirmYes}>
+                  Sim
+                </button>
+                <button className="btn btn-danger" onClick={handleConfirmNo}>
+                  Não
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
