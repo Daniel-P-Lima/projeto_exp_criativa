@@ -1,6 +1,8 @@
 import "../../App.css";
 import DataList from "../DataList/DataList";
 import ModalEditarUser from "../ModalEditarUser/ModalEditarUser";
+import ModalAdicionarUser from "../ModalAdicionarUser/ModalAdicionarUser";
+
 import { useEffect, useState } from "react";
 
 function ModalUser() {
@@ -8,6 +10,8 @@ function ModalUser() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemClicked, setItemClicked] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
 
   const fetchData = () => {
     fetch("http://localhost:8800/")
@@ -33,7 +37,7 @@ function ModalUser() {
 
   return (
     <div>
-      <DataList clicked={clicked} data={usuarios} />
+      <DataList clicked={clicked} data={usuarios} onAdd={() => setAddModalOpen(true)}/>
 
       {modalIsOpen && itemClicked && (
         <div className="modal">
@@ -84,6 +88,14 @@ function ModalUser() {
           atualizarUsuarios={fetchData}
         />
       )}
+
+      {addModalOpen && (
+        <ModalAdicionarUser
+          onClose={() => setAddModalOpen(false)}
+          atualizarUsuarios={fetchData}
+        />
+      )}
+
     </div>
   );
 }

@@ -97,3 +97,7 @@
     float: right;
     gap: 20px;
 }
+
+.form-floating input{
+    margin-bottom: 20px;
+}

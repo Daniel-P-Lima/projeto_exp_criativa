@@ -3,7 +3,7 @@ const DataList = (props) => {
     <div>
       <div className="header">
         <h1 className="title">Listando Usuários</h1>
-        <button type="button" className="btn btn-success">Adicionar Usuário</button>
+        <button type="button" className="btn btn-success" onClick={props.onAdd}>Adicionar Usuário</button>
       </div>
 
       <ul className="list">
