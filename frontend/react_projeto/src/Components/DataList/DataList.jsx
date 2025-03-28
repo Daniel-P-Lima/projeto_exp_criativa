@@ -18,6 +18,13 @@ const DataList = (props) => {
             >
               Mais detalhes
             </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => props.onDelete(item.idUsuarios)}
+            >
+              Excluir
+            </button>
+
           </li>
         ))}
       </ul>

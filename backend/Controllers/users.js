@@ -37,5 +37,22 @@ export const adicionarUser = (req, res) => {
       });
   
 }
+
+export const deletarUser = (req, res) => {
+  const id = req.params.id; // <-- ID deve vir da URL
+
+  console.log("Recebido ID:", id); // DEBUG
+
+  const sql = "DELETE FROM usuarios WHERE idUsuarios = ?";
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("Erro ao excluir usuário:", err);
+      return res.status(500).json({ error: "Erro ao excluir" });
+    }
+
+    return res.json({ message: "Usuário excluído com sucesso!" });
+  });
+};
   
 

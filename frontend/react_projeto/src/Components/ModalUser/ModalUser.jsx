@@ -35,9 +35,27 @@ function ModalUser() {
     setItemClicked(null);
   }
 
+  const handleDelete = (idUsuarios) => {
+    if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
+      
+      fetch(`http://localhost:8800/deletarUsuario/${idUsuarios}`, {
+        
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Usuário excluído:", data);
+          fetchData();
+        })
+        .catch((error) => {
+          console.error("Erro ao excluir usuário:", error);
+        });
+    }
+  };
+  
   return (
     <div>
-      <DataList clicked={clicked} data={usuarios} onAdd={() => setAddModalOpen(true)}/>
+      <DataList clicked={clicked} data={usuarios} onAdd={() => setAddModalOpen(true)} onDelete={handleDelete}/>
 
       {modalIsOpen && itemClicked && (
         <div className="modal">
