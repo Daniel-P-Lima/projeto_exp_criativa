@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../App.css";
-function ModalAdicionarUser({ onClose, atualizarUsuarios }) {
+function ModalAdicionarUser({ onClose, atualizarUsuarios, setErro }) {
     const [formData, setFormData] = useState({
         nome: "",
         idade: "",
@@ -21,14 +21,20 @@ function ModalAdicionarUser({ onClose, atualizarUsuarios }) {
             },
             body: JSON.stringify(formData),
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(async (response) => {
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Erro ao adicionar usuário.");
+                }
+
                 console.log("Usuário adicionado:", data);
-                atualizarUsuarios(); // Recarrega a lista
-                onClose(); // Fecha o modal
+                atualizarUsuarios();
+                onClose();
             })
             .catch((error) => {
-                console.error("Erro ao adicionar usuário:", error);
+                console.error("Erro ao adicionar:", error);
+                setErro(error.message);
             });
     };
 
@@ -45,7 +51,7 @@ function ModalAdicionarUser({ onClose, atualizarUsuarios }) {
                         <input className="form-control" placeholder="Idade" id="idade" aria-label="default input example" type="number" name="idade" value={formData.idade} onChange={handleChange} />
                         <label for="idade">Idade</label>
                     </div>
-                    <div className="form-floating">    
+                    <div className="form-floating">
                         <input className="form-control" placeholder="cpf" id="cpf" aria-label="default input example" type="number" name="cpf" value={formData.cpf} onChange={handleChange} />
                         <label for="cpf">CPF</label>
                     </div>

@@ -2,6 +2,7 @@ import "../../App.css";
 import DataList from "../DataList/DataList";
 import ModalEditarUser from "../ModalEditarUser/ModalEditarUser";
 import ModalAdicionarUser from "../ModalAdicionarUser/ModalAdicionarUser";
+import ModalErro from "../ModalErro/ModalErro";
 
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ function ModalUser() {
   const [itemClicked, setItemClicked] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
-
+  const [erro, setErro] = useState(null);
 
   const fetchData = () => {
     fetch("http://localhost:8800/")
@@ -111,6 +112,14 @@ function ModalUser() {
         <ModalAdicionarUser
           onClose={() => setAddModalOpen(false)}
           atualizarUsuarios={fetchData}
+          setErro={setErro}
+        />
+      )}
+
+      {erro && (
+        <ModalErro
+          mensagem={erro}
+          onClose={() => setErro(null)}
         />
       )}
 

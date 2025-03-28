@@ -25,18 +25,29 @@ export const editUser = (req, res) => {
     });
   };
 
-export const adicionarUser = (req, res) => {
-    const {nome, idade, cpf } = req.body;
-    const sql = "INSERT INTO usuarios (nome, idade, cpf) VALUES (?, ?, ?)";
-
-    db.query(sql, [nome, idade, cpf], (err, results) => {
+  export const adicionarUser = (req, res) => {
+    const { nome, idade, cpf } = req.body;
+    
+    const checkSql = "SELECT * FROM usuarios WHERE cpf = ?";
+    db.query(checkSql, [cpf], (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: "Erro ao verificar CPF" });
+      }
+  
+      if (results.length > 0) {
+        return res.status(400).json({ error: "CPF já cadastrado!" });
+      }
+      const insertSql = "INSERT INTO usuarios (nome, idade, cpf) VALUES (?, ?, ?)";
+      db.query(insertSql, [nome, idade, cpf], (err, results) => {
         if (err) {
           return res.status(500).send(err);
         }
-        return res.json({ message: "Usuário adicionado com sucesso!"});
-      });
   
-}
+        return res.json({ message: "Usuário adicionado com sucesso!" });
+      });
+    });
+  };
+  
 
 export const deletarUser = (req, res) => {
   const id = req.params.id; // <-- ID deve vir da URL
