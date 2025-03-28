@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from "react";
-
 const DataList = (props) => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8800/")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
   return (
     <div>
-      <h1 className="title">Listando Usuários</h1>
+      <div className="header">
+        <h1 className="title">Listando Usuários</h1>
+        <button type="button" className="btn btn-success">Adicionar Usuário</button>
+      </div>
+
       <ul className="list">
-        {data.map((item) => (
+        {props.data.map((item) => (
           <li key={item.idUsuarios} className="li-list">
             <p id="nome">Nome: {item.nome}</p>
             <p id="idade">Idade: {item.idade}</p>

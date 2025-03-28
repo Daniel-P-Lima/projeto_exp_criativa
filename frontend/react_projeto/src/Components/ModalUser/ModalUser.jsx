@@ -1,12 +1,24 @@
 import "../../App.css";
 import DataList from "../DataList/DataList";
 import ModalEditarUser from "../ModalEditarUser/ModalEditarUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ModalUser() {
+  const [usuarios, setUsuarios] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemClicked, setItemClicked] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const fetchData = () => {
+    fetch("http://localhost:8800/")
+      .then((res) => res.json())
+      .then((data) => setUsuarios(data))
+      .catch((err) => console.error("Erro ao buscar usuários:", err));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   function clicked(item) {
     console.log("Clicou no item", item.idUsuarios);
@@ -21,33 +33,39 @@ function ModalUser() {
 
   return (
     <div>
-      <DataList clicked={clicked} />
+      <DataList clicked={clicked} data={usuarios} />
 
       {modalIsOpen && itemClicked && (
         <div className="modal">
           <div className="modal-content">
             <h1>Detalhes do Usuário</h1>
-
-            <div className="container-dados-usuario-superior">
-              <p>
-                <strong>Nome:</strong> {itemClicked.nome}
-              </p>
-              <p className="idade">
-                <strong>Idade:</strong> {itemClicked.idade}
-              </p>
-              <div className="divBotaoEditarUsuario">
+            <div className="row">
+            <div className="col">
                 <button
                   className="btn btn-primary botaoEditarUsuario"
                   onClick={() => setEditModalOpen(true)}
                 >
                   <i className="material-icons">edit</i>
-                </button>
+                </button>      
               </div>
             </div>
-            <div className="container-dados-usuario-inferior">
-              <p>
-                <strong>CPF:</strong> {itemClicked.cpf}
-              </p>
+            <div className="row">
+              <div className="col">
+                <p>
+                  <strong>Nome:</strong> {itemClicked.nome}
+                </p>
+              </div>
+              <div className="col">
+                <p className="idade">
+                  <strong>Idade:</strong> {itemClicked.idade}
+                </p>
+              </div>
+              <div className="col">
+                <p>
+                  <strong>CPF:</strong> {itemClicked.cpf}
+                </p>
+              </div>
+              
             </div>
             <button className="btn btn-primary" onClick={closeModal}>
               Fechar
@@ -59,12 +77,11 @@ function ModalUser() {
       {editModalOpen && itemClicked && (
         <ModalEditarUser
           user={itemClicked}
-          onClose={() => setEditModalOpen(false)}
-          onSave={(updatedUser) => {
-            setItemClicked(updatedUser);
-            console.log("Usuário editado:", updatedUser);
-            // Aqui você pode fazer uma chamada para a API se quiser salvar
+          onClose={() => {
+            setEditModalOpen(false);
+            setModalIsOpen(false);
           }}
+          atualizarUsuarios={fetchData}
         />
       )}
     </div>
